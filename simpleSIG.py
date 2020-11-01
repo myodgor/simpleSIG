@@ -11,7 +11,7 @@ elif os.path.exists(r'C:\Program Files (x86)\Crypto Pro\CSP\csptest.exe'):
     cspp = r'C:\Program Files (x86)\Crypto Pro\CSP\csptest.exe'
     certp = 'C:\Program Files (x86)\Crypto Pro\CSP'
 else:
-    sg.Popup('Ошибка! Программное обеспечение Крипто ПРО не найдено.')
+    sg.Popup('Ошибка!\nПрограммное обеспечение Крипто ПРО не найдено.')
     sys.exit()
 
 #Запуск программы
@@ -70,7 +70,7 @@ for i in g:
     if name[1] != '' and name[2] != '':
         org.append(name[0]+'; '+name[2]+'; '+name[1]) 
 if len(org) == 0:
-    sg.Popup('Ошибка! В системе не обнаружены ЭЦП.')
+    sg.Popup('Ошибка!\nВ системе не обнаружены ЭЦП.')
     sys.exit()
 
 #Обработка запроса
