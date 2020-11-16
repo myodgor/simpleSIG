@@ -46,10 +46,6 @@ while "  " in text:
     text = text.replace("  ", " ")
 while '""' in text:
     text = text.replace('""', '"')
-start = 0
-g = []
-org = []
-s = 0
 if 'Subject : ' in text:
     sname = 'Subject : ' #На английском
 elif 'Субъект : ' in text:
@@ -57,6 +53,10 @@ elif 'Субъект : ' in text:
 else:
     sg.Popup('Ошибка!\nВ системе не обнаружены ЭЦП.')
     sys.exit()
+start = 0
+g = []
+org = []
+s = 0
 while start < (len(text)):
     cn1 = text.find('Subject : ', start)
     if cn1 == -1:
