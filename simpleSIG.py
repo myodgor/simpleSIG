@@ -48,6 +48,12 @@ while '""' in text:
     text = text.replace('""', '"')
 start = 0
 g = []
+org = []
+s = 0
+if 'Subject : ' in text:
+    sname = 'Subject : ' #На английском
+else:
+    sname = 'Субъект : ' #На русском
 while start < (len(text)):
     cn1 = text.find('Subject : ', start)
     if cn1 == -1:
@@ -55,8 +61,6 @@ while start < (len(text)):
     cn2 = text.find('\n', cn1)
     g.append(text[cn1+10:cn2])
     start = cn2
-org = []
-s = 0
 for i in g:
     ii = i.split(', ')
     name = ['', '', '']
