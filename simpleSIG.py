@@ -52,8 +52,11 @@ org = []
 s = 0
 if 'Subject : ' in text:
     sname = 'Subject : ' #На английском
-else:
+elif 'Субъект : ' in text:
     sname = 'Субъект : ' #На русском
+else:
+    sg.Popup('Ошибка!\nВ системе не обнаружены ЭЦП.')
+    sys.exit()
 while start < (len(text)):
     cn1 = text.find('Subject : ', start)
     if cn1 == -1:
@@ -100,7 +103,6 @@ def ronga():
         sg.Popup('Прозошла ошибка, попробуйте еще раз!')
     print(data[0])
     sg.Popup('Файл подписан!')
-    return
 
 #Создание окна программы
 layout = [
@@ -112,7 +114,7 @@ layout = [
     [sg.Checkbox('Присоединенная подпись', key='tosig')],
     [sg.Button('Подписать'), sg.Button('Очистить форму'), sg.Button('Выход')],
     [sg.Output(key='vyxod', size=(88, 20))],
-    [sg.Text('simpleSIG v1.0 (2020.10.31)'), sg.Button('О программе')]
+    [sg.Text('simpleSIG v1.1 (2020.11.16)'), sg.Button('О программе')]
 ]
 window = sg.Window('Подписать файлы ЭЦП', layout)
 
