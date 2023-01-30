@@ -53,6 +53,17 @@ elif 'Субъект : ' in text:
 else:
     sg.Popup('Ошибка!\nВ системе не обнаружены ЭЦП.')
     exit()
+if 'SHA1 Hash' in text:
+    snameSHA = 'SHA1 Hash'
+    sSHA = 12
+    NVA = 'Not valid after'
+    sNVA = 18
+else:
+    snameSHA = 'SHA1 отпечаток'
+    sSHA = 17
+    NVA = 'Истекает : '
+    sNVA = 11
+
 start = 0
 g = []
 org = []
@@ -62,20 +73,19 @@ while start < (len(text)):
     if cn1 == -1:
         break
     cn2 = text.find('\n', cn1)
-
     organ = text[cn1 + 10:cn2]
     start = cn2
-    cn1 = text.find('SHA1 Hash', start)
+    cn1 = text.find(snameSHA, start)
     if cn1 == -1:
         break
     cn2 = text.find('\n', cn1)
-    organ += ', KeyID=' + text[cn1 + 12:cn2]
+    organ += ', KeyID=' + text[cn1 + sSHA:cn2]
     start = cn2
-    cn1 = text.find('Not valid after', start)
+    cn1 = text.find(NVA, start)
     if cn1 == -1:
         break
     cn2 = text.find('\n', cn1)
-    organ += ', NVA=' + text[cn1 + 18:cn1 + 28]
+    organ += ', NVA=' + text[cn1 + sNVA:cn1 + sNVA + 10]
     start = cn2
     g.append(organ)
 for i in g:
@@ -141,7 +151,7 @@ layout = [
     [sg.Checkbox('Со штампом времени', key='sigtime')],
     [sg.Button('Подписать'), sg.Button('Очистить форму'), sg.Button('Выход')],
     [sg.Output(key='vyxod', size=(88, 20))],
-    [sg.Text('simpleSIG v1.2 (2022.12.02)'), sg.Button('О программе')]
+    [sg.Text('simpleSIG v1.3 (2023.01.30)'), sg.Button('О программе')]
 ]
 window = sg.Window('Подписать файлы ЭЦП', layout)
 
