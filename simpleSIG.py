@@ -2,6 +2,11 @@ import PySimpleGUI as sg
 from sys import exit
 from os import path, getcwd, chdir
 import subprocess
+from datetime import datetime
+
+
+#Текущая дата
+tdata = datetime.now()
 
 # Проверка наличия ПО Крипто ПРО
 if path.exists(r'C:\Program Files\Crypto Pro\CSP\csptest.exe'):
@@ -108,7 +113,9 @@ for i in g:
         if l[0:4] == "ИНН=" and name[1] == '':
             name[1] = l[4:].lstrip("0")
     if name[0] != '' and name[1] != '':
-        org.append(name[0] + '; ' + name[4] + '; ' + name[2] + '; ' + name[1] + '; ' + name[3])
+        deadline = datetime.strptime(name[4], "%d/%m/%Y")
+        if deadline > tdata:
+            org.append(name[0] + '; ' + name[4] + '; ' + name[2] + '; ' + name[1] + '; ' + name[3])
 if len(org) == 0:
     sg.Popup('Ошибка!\nНе удалось обработать список ЭЦП.')
     exit()
@@ -151,7 +158,7 @@ layout = [
     [sg.Checkbox('Со штампом времени', key='sigtime')],
     [sg.Button('Подписать'), sg.Button('Очистить форму'), sg.Button('Выход')],
     [sg.Output(key='vyxod', size=(88, 20))],
-    [sg.Text('simpleSIG v1.3 (2023.01.30)'), sg.Button('О программе')]
+    [sg.Text('simpleSIG v1.4 (2023.07.06)'), sg.Button('О программе')]
 ]
 window = sg.Window('Подписать файлы ЭЦП', layout)
 
