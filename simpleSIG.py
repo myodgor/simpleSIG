@@ -131,7 +131,7 @@ def ronga():
     filename = values[0]  # .replace("/", "\\")[:-1]
     if values['tosig'] == True:
         pusk = cspp + forsig[0] + ' -sign -add -in "' + filename + '" -out "' + path.splitext(filename)[0] + forsig[1] + \
-               path.splitext(filename)[1] + '" -my ' + ddd[1]
+               path.splitext(filename)[1] + '" -my ' + ddd[4]
     else:
         pusk = cspp + forsig[0] + ' -sign -detached -add -in "' + filename + '" -out "' + filename + forsig[2] + '" -my ' + ddd[4]
     if values['sigtime'] == True:
