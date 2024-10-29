@@ -124,16 +124,20 @@ if len(org) == 0:
 # Обработка запроса
 def ronga():
     ddd = values['kto'][0].split("; ")
+    if values['sigbase64'] == True:
+        sigbs64 = ' -base64'
+    else:
+        sigbs64 = ''
     if values['fsig'] == True:
         forsig = [' -sfsign', '_sig', '.sig']
     else:
         forsig = [' -cmssfsign', '_p7s', '.p7s']
     filename = values[0]  # .replace("/", "\\")[:-1]
     if values['tosig'] == True:
-        pusk = cspp + forsig[0] + ' -sign -add -in "' + filename + '" -out "' + path.splitext(filename)[0] + forsig[1] + \
+        pusk = cspp + forsig[0] + ' -sign -add' + sigbs64 + ' -in "' + filename + '" -out "' + path.splitext(filename)[0] + forsig[1] + \
                path.splitext(filename)[1] + '" -my ' + ddd[4]
     else:
-        pusk = cspp + forsig[0] + ' -sign -detached -add -in "' + filename + '" -out "' + filename + forsig[2] + '" -my ' + ddd[4]
+        pusk = cspp + forsig[0] + ' -sign -detached -add' + sigbs64 + ' -in "' + filename + '" -out "' + filename + forsig[2] + '" -my ' + ddd[4]
     if values['sigtime'] == True:
         pusk = pusk + ' -addsigtime'
     par_ol = values['password']
@@ -159,8 +163,9 @@ layout = [
     [sg.Text('Введите ПИН закрытого ключа*'), sg.InputText(key='password', password_char='*', size=(15, 1))],
     [sg.Text('* Необязательный пункт. Запрашивается через ПО Крипто ПРО.')],
     [sg.Text('Выберите файл'), sg.InputText(), sg.FileBrowse('Выбрать', key='file')],
-    [sg.Checkbox('Присоединенная подпись', key='tosig')],
+    [sg.Checkbox('Присоединенная подпись (не работает)', key='tosig')],
     [sg.Checkbox('Со штампом времени', key='sigtime')],
+    [sg.Checkbox('Base64', key='sigbase64')],
     [sg.Button('Подписать'), sg.Button('Очистить форму'), sg.Button('Выход')],
     [sg.Output(key='vyxod', size=(88, 20))],
     [sg.Text('simpleSIG v1.5 (2024.10.29)'), sg.Button('О программе')]
