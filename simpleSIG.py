@@ -124,12 +124,16 @@ if len(org) == 0:
 # Обработка запроса
 def ronga():
     ddd = values['kto'][0].split("; ")
+    if values['fsig'] == True:
+        forsig = [' -sfsign', '_sig', '.sig']
+    else:
+        forsig = [' -cmssfsign', '_p7s', '.p7s']
     filename = values[0]  # .replace("/", "\\")[:-1]
     if values['tosig'] == True:
-        pusk = cspp + ' -sfsign -sign -add -in "' + filename + '" -out "' + path.splitext(filename)[0] + '_sig' + \
+        pusk = cspp + forsig[0] + ' -sign -add -in "' + filename + '" -out "' + path.splitext(filename)[0] + forsig[1] + \
                path.splitext(filename)[1] + '" -my ' + ddd[1]
     else:
-        pusk = cspp + ' -sfsign -sign -detached -add -in "' + filename + '" -out "' + filename + '.sig" -my ' + ddd[4]
+        pusk = cspp + forsig[0] + ' -sign -detached -add -in "' + filename + '" -out "' + filename + forsig[2] + '" -my ' + ddd[4]
     if values['sigtime'] == True:
         pusk = pusk + ' -addsigtime'
     par_ol = values['password']
@@ -151,6 +155,7 @@ def ronga():
 layout = [
     [sg.Text('Выберите владельца ЭЦП')],
     [sg.Listbox(values=org, size=(88, len(org)), key='kto', enable_events=True)],
+    [sg.Radio('В формате SIG', "format", key='fsig', default=True), sg.Radio('В формате PKCS#7', "format", key='fp7s')],
     [sg.Text('Введите ПИН закрытого ключа*'), sg.InputText(key='password', password_char='*', size=(15, 1))],
     [sg.Text('* Необязательный пункт. Запрашивается через ПО Крипто ПРО.')],
     [sg.Text('Выберите файл'), sg.InputText(), sg.FileBrowse('Выбрать', key='file')],
@@ -158,7 +163,7 @@ layout = [
     [sg.Checkbox('Со штампом времени', key='sigtime')],
     [sg.Button('Подписать'), sg.Button('Очистить форму'), sg.Button('Выход')],
     [sg.Output(key='vyxod', size=(88, 20))],
-    [sg.Text('simpleSIG v1.4 (2023.07.06)'), sg.Button('О программе')]
+    [sg.Text('simpleSIG v1.5 (2024.10.29)'), sg.Button('О программе')]
 ]
 window = sg.Window('Подписать файлы ЭЦП', layout)
 
